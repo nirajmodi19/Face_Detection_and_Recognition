@@ -19,15 +19,18 @@ while True:
         face = gray[y:y+h, x:x+w]
         eyes = eye_cascade.detectMultiScale(face, 1.3, 5, flags = cv2.CASCADE_SCALE_IMAGE)
         if (len(eyes) == 2):
+            
             if face is None:
                 continue
             faceid = recognizer.predict(face)
             username = user[faceid]
+            print (faceid)
             cv2.putText(img, username, (x, y), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2)
-    cv2.imshow('img', img)
+            cv2.imshow('img', img)
+            cv2.waitKey(0)
+    cv2.imshow('img', img) 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-
 cam.release()
 cv2.destroyAllWindows()
 
