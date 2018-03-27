@@ -22,10 +22,15 @@ while True:
             
             if face is None:
                 continue
-            faceid = recognizer.predict(face)
-            username = user[faceid]
-            print (faceid)
+            collector = cv2.face.MinDistancePredictCollector()
+            recognizer.predict(face, collector, 0)
+            label = collector.getLabel()
+            conf = collector.getDist()
+            conf = str(int(conf))
+            username = user[label]
+            print (label)
             cv2.putText(img, username, (x, y), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2)
+            cv2.putText(img, conf, (x, y+h), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 1)
             cv2.imshow('img', img)
             cv2.waitKey(0)
     cv2.imshow('img', img) 
